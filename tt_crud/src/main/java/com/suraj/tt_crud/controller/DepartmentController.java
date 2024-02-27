@@ -3,6 +3,8 @@ package com.suraj.tt_crud.controller;
 import com.suraj.tt_crud.entity.Department;
 import com.suraj.tt_crud.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +18,13 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @PostMapping("/departments")
-    public Department saveDepartment( @Validated @RequestBody Department department){
-        return departmentService.saveDepartment(department);
+    public ResponseEntity<Department> saveDepartment( @Validated @RequestBody Department department){
+        return new ResponseEntity<Department>(departmentService.saveDepartment(department),HttpStatus.CREATED) ;
     }
 
     @GetMapping("/departments")
-    public List<Department> getalldepartmentList(){
-        return departmentService.getalldepartmentList();
+    public ResponseEntity<List<Department>> getalldepartmentList(){
+        return ResponseEntity.ok(departmentService.getalldepartmentList());
     }
 
     @GetMapping("/departments/{id}")
